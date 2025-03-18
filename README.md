@@ -1,46 +1,14 @@
-<div align="center">
-🎉 announcing <a href="https://github.com/dotenvx/dotenvx">dotenvx</a>. <em>run anywhere, multi-environment, encrypted envs</em>.
-</div>
-
-&nbsp;
-
-<div align="center">
-
-<p>
-  <sup>
-    <a href="https://github.com/sponsors/motdotla">Dotenv is supported by the community.</a>
-  </sup>
-</p>
-<sup>Special thanks to:</sup>
-<br>
-<br>
-<a href="https://www.warp.dev/?utm_source=github&utm_medium=referral&utm_campaign=dotenv_p_20220831">
-  <div>
-    <img src="https://res.cloudinary.com/dotenv-org/image/upload/v1661980709/warp_hi8oqj.png" width="230" alt="Warp">
-  </div>
-  <b>Warp is a blazingly fast, Rust-based terminal reimagined to work like a modern app.</b>
-  <div>
-    <sup>Get more done in the CLI with real text editing, block-based output, and AI command search.</sup>
-  </div>
-</a>
-<br>
-<a href="https://workos.com/?utm_campaign=github_repo&utm_medium=referral&utm_content=dotenv&utm_source=github">
-  <div>
-    <img src="https://res.cloudinary.com/dotenv-org/image/upload/c_scale,w_400/v1665605496/68747470733a2f2f73696e647265736f726875732e636f6d2f6173736574732f7468616e6b732f776f726b6f732d6c6f676f2d77686974652d62672e737667_zdmsbu.svg" width="270" alt="WorkOS">
-  </div>
-  <b>Your App, Enterprise Ready.</b>
-  <div>
-    <sup>Add Single Sign-On, Multi-Factor Auth, and more, in minutes instead of months.</sup>
-  </div>
-</a>
-<hr>
-</div>
+* [dotenvx](https://github.com/dotenvx/dotenvx)
+  * allows
+    * run encrypted envs
+      * anywhere
+      * MULTI-environment 
 
 # dotenv [![NPM version](https://img.shields.io/npm/v/dotenv.svg?style=flat-square)](https://www.npmjs.com/package/dotenv)
 
-<img src="https://raw.githubusercontent.com/motdotla/dotenv/master/dotenv.svg" alt="dotenv" align="right" width="200" />
-
-Dotenv is a zero-dependency module that loads environment variables from a `.env` file into [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env). Storing configuration in the environment separate from code is based on [The Twelve-Factor App](https://12factor.net/config) methodology.
+* Dotenv
+  * == 0-dependency module / 💡from a `.env` file -- loads -- environment variables | [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env) 💡
+    * == follows [Twelve-Factor App](https://12factor.net/config) methodology
 
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat-square)](https://github.com/feross/standard)
 [![LICENSE](https://img.shields.io/github/license/motdotla/dotenv.svg)](LICENSE)
@@ -55,62 +23,35 @@ Dotenv is a zero-dependency module that loads environment variables from a `.env
 * [❓ FAQ](#-faq)
 * [⏱️ Changelog](./CHANGELOG.md)
 
-## 🌱 Install
+## 🌱 How to install?
 
 ```bash
 npm install dotenv --save
-```
-
-You can also use an npm-compatible package manager like yarn or bun:
-
-```bash
+# or
 yarn add dotenv
 # or
 bun add dotenv
 ```
 
-## 🏗️ Usage
-
-<a href="https://www.youtube.com/watch?v=YtkZR0NFd1g">
-<div align="right">
-<img src="https://img.youtube.com/vi/YtkZR0NFd1g/hqdefault.jpg" alt="how to use dotenv video tutorial" align="right" width="330" />
-<img src="https://simpleicons.vercel.app/youtube/ff0000" alt="youtube/@dotenvorg" align="right" width="24" />
-</div>
-</a>
-
-Create a `.env` file in the root of your project (if using a monorepo structure like `apps/backend/app.js`, put it in the root of the folder where your `app.js` process runs):
-
-```dosini
-S3_BUCKET="YOURS3BUCKET"
-SECRET_KEY="YOURSECRETKEYGOESHERE"
-```
-
-As early as possible in your application, import and configure dotenv:
-
-```javascript
-require('dotenv').config()
-console.log(process.env) // remove this after you've confirmed it is working
-```
-
-.. [or using ES6?](#how-do-i-use-dotenv-with-import)
-
-```javascript
-import 'dotenv/config'
-```
-
-That's it. `process.env` now has the keys and values you defined in your `.env` file:
-
-```javascript
-require('dotenv').config()
-// or import 'dotenv/config' if you're using ES6
-
-...
-
-s3.getBucketCors({Bucket: process.env.S3_BUCKET}, function(err, data) {})
-```
+## 🏗️ How to use?
+* [video](https://www.youtube.com/watch?v=YtkZR0NFd1g)
+* steps
+  * create a `.env` file 
+    * | your project's root OR
+    * if you use monorepos -> | folder / `app.js`, | root
+  * import & configure dotenv
+    ```
+    # 1. -- via -- CommonJS
+    require('dotenv').config()
+    
+    # 2. -- via -- ES6
+    import 'dotenv/config'
+    ```
+    * see [how to use ES6?](#how-do-i-use-dotenv-with-import)
 
 ### Multiline values
 
+* TODO:
 If you need multiline variables, for example private keys, those are now supported (`>= v15.0.0`) with line breaks:
 
 ```dosini
@@ -522,20 +463,13 @@ variableExpansion(myEnv)
 ```
 
 ### How do I use dotenv with `import`?
-
-Simply..
-
-```javascript
-// index.mjs (ESM)
-import 'dotenv/config' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
-import express from 'express'
-```
-
-A little background..
-
-> When you run a module containing an `import` declaration, the modules it imports are loaded first, then each module body is executed in a depth-first traversal of the dependency graph, avoiding cycles by skipping anything already executed.
->
-> – [ES6 In Depth: Modules](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
+ 
+* _Example:_ [here](examples/index.mjs)
+* | run a module / contains `import` -> 👀imported modules -- are loaded -- first 👀
+  * -> EACH module body -- is -- executed | dependency graph's depth-first traversal
+    * Reason: 🧠avoid cycles / skip anything ALREADY executed 🧠
+    * see [ES6 In Depth: Modules](https://hacks.mozilla.org/2015/08/es6-in-depth-modules/)
+  * TODO:
 
 What does this mean in plain language? It means you would think the following would work but it won't.
 
@@ -570,7 +504,9 @@ import 'dotenv/config'
 import errorReporter from './errorReporter.mjs'
 ```
 
-Does that make sense? It's a bit unintuitive, but it is how importing of ES6 modules work. Here is a [working example of this pitfall](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-es6-import-pitfall).
+Does that make sense? 
+It's a bit unintuitive, but it is how importing of ES6 modules work.
+Here is a [working example of this pitfall](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-es6-import-pitfall).
 
 There are two alternatives to this approach:
 
@@ -644,17 +580,3 @@ RUN curl -fsS https://dotenvx.sh/ | sh
 RUN dotenvx prebuild
 CMD ["dotenvx", "run", "--", "node", "index.js"]
 ```
-
-## Contributing Guide
-
-See [CONTRIBUTING.md](CONTRIBUTING.md)
-
-## CHANGELOG
-
-See [CHANGELOG.md](CHANGELOG.md)
-
-## Who's using dotenv?
-
-[These npm modules depend on it.](https://www.npmjs.com/browse/depended/dotenv)
-
-Projects that expand it often use the [keyword "dotenv" on npm](https://www.npmjs.com/search?q=keywords:dotenv).
