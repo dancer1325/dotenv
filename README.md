@@ -51,38 +51,23 @@ bun add dotenv
 
 ### Multiline values
 
-* TODO:
-If you need multiline variables, for example private keys, those are now supported (`>= v15.0.0`) with line breaks:
-
-```dosini
-PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----
-...
-Kh9NV...
-...
------END RSA PRIVATE KEY-----"
-```
-
-Alternatively, you can double quote strings and use the `\n` character:
-
-```dosini
-PRIVATE_KEY="-----BEGIN RSA PRIVATE KEY-----\nKh9NV...\n-----END RSA PRIVATE KEY-----\n"
-```
+* requirements
+  * `>= v15.0.0`
+* ways to specify
+  * line breaks DIRECTLY
+  * `"\n"`
+* use cases
+  * private keys
 
 ### Comments
 
-Comments may be added to your file on their own line or inline:
-
-```dosini
-# This is a comment
-SECRET_KEY=YOURSECRETKEYGOESHERE # comment
-SECRET_HASH="something-with-a-#-hash"
-```
-
-Comments begin where a `#` exists, so if your value contains a `#` please wrap it in quotes. This is a breaking change from `>= v15.0.0` and on.
+* `#`
+* if a value contains `#` & `>= v15.0.0` -> `"#"`
 
 ### Parsing
-
-The engine which parses the contents of your file containing environment variables is available to use. It accepts a String or Buffer and will return an Object with the parsed keys and values.
+* TODO:
+The engine which parses the contents of your file containing environment variables is available to use. 
+It accepts a String or Buffer and will return an Object with the parsed keys and values.
 
 ```javascript
 const dotenv = require('dotenv')
@@ -93,11 +78,14 @@ console.log(typeof config, config) // object { BASIC : 'basic' }
 
 ### Preload
 
-> Note: Consider using [`dotenvx`](https://github.com/dotenvx/dotenvx) instead of preloading. I am now doing (and recommending) so.
+> Note: Consider using [`dotenvx`](https://github.com/dotenvx/dotenvx) instead of preloading.
+> I am now doing (and recommending) so.
 >
-> It serves the same purpose (you do not need to require and load dotenv), adds better debugging, and works with ANY language, framework, or platform. – [motdotla](https://github.com/motdotla)
+> It serves the same purpose (you do not need to require and load dotenv), 
+> adds better debugging, and works with ANY language, framework, or platform. – [motdotla](https://github.com/motdotla)
 
-You can use the `--require` (`-r`) [command line option](https://nodejs.org/api/cli.html#-r---require-module) to preload dotenv. By doing this, you do not need to require and load dotenv in your application code.
+You can use the `--require` (`-r`) [command line option](https://nodejs.org/api/cli.html#-r---require-module) to preload dotenv. 
+By doing this, you do not need to require and load dotenv in your application code.
 
 ```bash
 $ node -r dotenv/config your_script.js
@@ -109,7 +97,8 @@ The configuration options below are supported as command line arguments in the f
 $ node -r dotenv/config your_script.js dotenv_config_path=/custom/path/to/.env dotenv_config_debug=true
 ```
 
-Additionally, you can use environment variables to set configuration options. Command line arguments will precede these.
+Additionally, you can use environment variables to set configuration options.
+Command line arguments will precede these.
 
 ```bash
 $ DOTENV_CONFIG_<OPTION>=value node -r dotenv/config your_script.js
@@ -202,74 +191,44 @@ Hello Production
 
 ## 📚 Examples
 
-See [examples](https://github.com/dotenv-org/examples) of using dotenv with various frameworks, languages, and configurations.
-
-* [nodejs](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-nodejs)
-* [nodejs (debug on)](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-nodejs-debug)
-* [nodejs (override on)](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-nodejs-override)
-* [nodejs (processEnv override)](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-custom-target)
-* [esm](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-esm)
-* [esm (preload)](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-esm-preload)
-* [typescript](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-typescript)
-* [typescript parse](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-typescript-parse)
-* [typescript config](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-typescript-config)
-* [webpack](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-webpack)
-* [webpack (plugin)](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-webpack2)
-* [react](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-react)
-* [react (typescript)](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-react-typescript)
-* [express](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-express)
-* [nestjs](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-nestjs)
-* [fastify](https://github.com/dotenv-org/examples/tree/master/usage/dotenv-fastify)
+* see 
+  * [here](examples)
+  * [examples | DIFFERENT frameworks, languages, and configurations](https://github.com/dotenv-org/examples)
 
 ## 📖 Documentation
 
-Dotenv exposes four functions:
+* 👀functions / -- exposed by -- `dotenv` 👀
+  * `config`
+  * `parse`
+  * `populate`
+  * `decrypt`
 
-* `config`
-* `parse`
-* `populate`
-* `decrypt`
+### `config`
 
-### Config
+* what does it make?
+  * read your `.env` file
+  * parse the contents,
+  * 👀assign the content | [`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env) 👀
+  * return an Object / 
+    * `parsed` key
+      * == loaded content
+    * `error` key
+      * if loaded content failed
 
-`config` will read your `.env` file, parse the contents, assign it to
-[`process.env`](https://nodejs.org/docs/latest/api/process.html#process_process_env),
-and return an Object with a `parsed` key containing the loaded content or an `error` key if it failed.
+#### options == `config(options)`
 
-```js
-const result = dotenv.config()
+##### path == `config({path:["pathToEnvFile"]})`
 
-if (result.error) {
-  throw result.error
-}
-
-console.log(result.parsed)
-```
-
-You can additionally, pass options to `config`.
-
-#### Options
-
-##### path
-
-Default: `path.resolve(process.cwd(), '.env')`
-
-Specify a custom path if your file containing environment variables is located elsewhere.
-
-```js
-require('dotenv').config({ path: '/custom/path/to/.env' })
-```
-
-By default, `config` will look for a file called .env in the current working directory.
-
-Pass in multiple files as an array, and they will be parsed in order and combined with `process.env` (or `option.processEnv`, if set). The first value set for a variable will win, unless the `options.override` flag is set, in which case the last value set will win.  If a value already exists in `process.env` and the `options.override` flag is NOT set, no changes will be made to that value. 
-
-```js  
-require('dotenv').config({ path: ['.env.local', '.env'] })
-```
+* by default, `path.resolve(process.cwd(), '.env')`
+  * == .env | CURRENT working directory
+* use cases
+  * environment file is located ELSEWHERE
+* if you pass MULTIPLE files -> ALL will be taken in account / if key duplicated -> FIRST win
+* if you pass MULTIPLE files & `options.override=true` -> ALL will be taken in account / if key duplicated -> LAST win
 
 ##### encoding
 
+* TODO:
 Default: `utf8`
 
 Specify the encoding of your file containing environment variables.
@@ -312,7 +271,7 @@ console.log(myObject) // values from .env
 console.log(process.env) // this was not changed or written to
 ```
 
-### Parse
+### `parse`
 
 The engine which parses the contents of your file containing environment
 variables is available to use. It accepts a String or Buffer and will return
@@ -341,7 +300,7 @@ const config = dotenv.parse(buf, opt)
 // expect a debug message because the buffer is not in KEY=VAL form
 ```
 
-### Populate
+### `populate`
 
 The engine which populates the contents of your .env file to `process.env` is available for use. It accepts a target, a source, and options. This is useful for power users who want to supply their own objects.
 

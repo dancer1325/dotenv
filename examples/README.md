@@ -7,3 +7,4 @@
 
 # How to run it locally?
 * `node index.js` or `node index.mjs`
+* `node withoutApplyingConfig.js`
